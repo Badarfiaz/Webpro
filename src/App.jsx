@@ -6,6 +6,7 @@ import Cart from "./components/cart";
 import Login from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import { CartProvider } from "./components/CartState";
+import Register from './components/Register';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/item/:category" element={<ItemPreview />} />
           <Route path="/cart" element={<Cart />} />
+
+          <Route path="/register" element={<Register />} />
         </Routes>
       </CartProvider>
     </Router>

@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../Firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
+const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -18,9 +22,21 @@ function Login() {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+navigate("/")
+
+    } catch (err) {
+      setError(err.message.replace("Firebase: ", ""));
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-4">
-      <form 
+      <form
         onSubmit={handleSubmit}
         className="bg-[#1A1A1A] rounded-xl p-8 w-full max-w-md border border-[#333] shadow-lg shadow-[#6E00FF]/10"
       >
@@ -69,12 +85,26 @@ function Login() {
           />
         </div>
 
-        {/* Submit Button */}
+        {/* Sign In Button */}
         <button
           type="submit"
           className="w-full bg-gradient-to-r from-[#6E00FF] to-[#00A2FF] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity mb-4"
         >
           Sign In
+        </button>
+
+        {/* Google Sign-In Button */}
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="w-full flex items-center justify-center gap-3 bg-white text-black py-3 rounded-lg font-medium hover:opacity-90 transition-opacity border border-gray-300 mb-4"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          Sign in with Google
         </button>
 
         {/* Footer Links */}

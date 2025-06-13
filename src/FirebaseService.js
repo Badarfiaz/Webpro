@@ -19,19 +19,18 @@ export const fetchProducts = async () => {
 
 
 export const addCart = async (cart, userId) => {
-  await addDoc(collection(db, Table_Cart), {
+  await addDoc(collection(db, "Cart"), {
     ...cart,
     userId,
+    quantity: cart.quantity || 1,
     timestamp: new Date(),
   });
 };
+
 export const fetchUserCart = async (userId) => {
   const q = query(collection(db, "Cart"), where("userId", "==", userId));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({
-    id: doc.id, // <-- Firestore document ID, guaranteed unique
-    ...doc.data(),
-  }));
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
 
  

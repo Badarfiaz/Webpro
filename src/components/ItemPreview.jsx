@@ -45,8 +45,7 @@ const handleAddToCart = async (cart) => {
   if (variants.length === 0) return <p>No {category} variants found.</p>;
 
   return (
-    <div>
-      <h2>{category} Variants</h2>
+    <>
       {variants.map((cart, index) => (
         <ItemTypeCard
           key={index}
@@ -54,7 +53,7 @@ const handleAddToCart = async (cart) => {
           onAddToCart={handleAddToCart} // ✅ pass it to the card
         />
       ))}
-    </div>
+    </>
   );
 }
 

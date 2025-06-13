@@ -2,11 +2,12 @@
 
 import { useCart } from "./CartState";
 import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
   const { user } = useAuth();
-
+const navigate = useNavigate()
   if (!user) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center text-white">
@@ -113,7 +114,13 @@ function Cart() {
                   ${total.toFixed(2)}
                 </span>
               </div>
-              <button className="w-full bg-gradient-to-r from-[#6E00FF] to-[#00A2FF] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+              <button 
+              
+              onClick={()=>{
+navigate("/Checkout")
+
+              }}
+              className="w-full bg-gradient-to-r from-[#6E00FF] to-[#00A2FF] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
                 Proceed to Checkout
               </button>
             </div>

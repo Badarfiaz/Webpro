@@ -2,11 +2,21 @@ import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where } 
 import { db } from "./Firebase";
 const Table_name= "Items";
 const Table_Cart = "Cart";
+const Table_Checkout = "Checkout";
 
 
 export const addProduct = async (product) => {
   await addDoc(collection(db, Table_name), product);
 };
+
+
+export const addTable_Checkout = async (order) => {
+  await addDoc(collection(db, Table_Checkout), {
+    ...order,
+    timestamp: new Date(),
+  });
+};
+
 export const fetchProducts = async () => {
   const querySnapshot = await getDocs(collection(db, Table_name));
   const products = [];
